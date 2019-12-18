@@ -13,7 +13,7 @@ services:
     volumes:
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
       - .redis/data:/data
-      - /etc/localtime:/etc/localtime   #这个是使用宿主机时区，比下面的有效
+      - /etc/localtime:/etc/localtime   #这个是使用宿主机时区，比下面的有效 （下面两种设置方法 有些镜像的系统无效 比如：alpine）
     #容器内执行的命令
     command: redis-server /usr/local/etc/redis/redis.conf --appendonly yes
     environment:
