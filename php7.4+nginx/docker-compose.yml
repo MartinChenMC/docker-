@@ -15,5 +15,5 @@ services:
     - ./data:/usr/share/nginx/html
     - ./nginx-conf/nginx.conf:/etc/nginx/conf.d/default.conf
     links:
-      - php7.4-ext-redis-mongo
+      - php
 
