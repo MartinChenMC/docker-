@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t php:ext-redis-mongo .
+docker build -t php:7.4-ext-redis-mongo .
