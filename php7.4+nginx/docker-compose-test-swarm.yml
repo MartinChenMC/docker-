@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  nginx_php:
+    image: registry.cn-shenzhen.aliyuncs.com/test_images/php_nginx_service
+    volumes:
+      #php.conf
+      - /data/docker/config/php/php.ini:/usr/local/etc/php/php.ini
+      - /data/docker/config/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      #代码目录
+      - /data/docker/code/php/:/home/www/
+      #nginx.conf
+      - /data/docker/config/nginx/dev/nginx.conf:/etc/nginx/nginx.conf
+      - /data/docker/config/nginx/dev/mime.types:/etc/nginx/mime.types
+      - /data/docker/config/nginx/dev/vhosts/:/usr/local/nginx/conf/vhosts/
+      - /data/docker/config/nginx/dev/cert/:/usr/local/nginx/cert
+      #Nginx log
+      - /data/docker/logs/nginx/:/var/log/nginx
+      #Project error log
+      - /data/docker/logs/php/project_log/:/tmp/log
+    #PHP-FPM log
+    networks:
+      - stack_net
+    ports:
+      - 80:80
+      - 443:443
+
+  common_guard_service:
+    image: registry.cn-shenzhen.aliyuncs.com/test_images/common_guard_service
+    volumes:
+      #php.conf
+      - /data/docker/config/php/php.ini:/usr/local/etc/php/php.ini
+      #代码目录
+      - /data/docker/code/php/:/home/www/
+    networks:
+      - stack_net
+    ports:
+      - 8187:8187
+      - 8090:8090
+      - 9090:9090
+
+networks:
+  stack_net:
+    driver: overlay
